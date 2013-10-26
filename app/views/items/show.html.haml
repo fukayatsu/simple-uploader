@@ -1,0 +1,46 @@
+%h1 詳細
+.row
+  .col-lg-offset-2.col-lg-8
+    %table.table
+      %tbody
+        %tr
+          %td{width: '20%'} name
+          %td= @item.name.presence || @item.original_name
+        %tr
+          %td サイズ
+          %td= @item.size
+        %tr
+          %td ダウンロード数
+          %td= @item.download_count
+        %tr
+          %td ダウンロード期限
+          %td= @item.expires_at
+        %tr
+          %td ファイルタイプ
+          %td= @item.content_type
+        %tr
+          %td
+          %td= link_to 'download', download_item_path(@item), 'data-no-turbolink' => true, class: 'btn btn-primary'
+
+
+%hr
+
+%h2 削除
+.row
+  = form_for @item, method: :post, html: { role: 'form', class: 'form-horizontal' } do |f|
+    - if @item.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
+        %ul
+          - @item.errors.full_messages.each do |msg|
+            %li= msg
+    .form-group
+      = f.label :password, '削除パスワード', class: 'col-lg-2 control-label'
+      .col-lg-5
+        = f.password_field :password, class: 'form-control', placeholder: '******'
+    .form-group
+      .col-lg-offset-2.col-lg-10
+        = f.button '削除', class: 'btn btn-danger', type: 'submit', data: { disable_with: '削除...', confirm: '本当に削除しますか？'}
+
+
+  = link_to 'Back', items_path

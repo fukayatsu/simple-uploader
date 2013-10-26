@@ -1,0 +1,32 @@
+%h1 アップロード
+= render 'form'
+
+%hr
+
+%h1 ファイル一覧
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th タイトル
+      %th サイズ
+      %th ダウンロード数
+      %th 有効期限
+      %th ファイルタイプ
+      %th
+      %th
+      %th
+      %th
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td= item.name.presence || item.original_name
+        %td= item.size
+        %td= item.download_count
+        %td= item.expires_at
+        %td= item.content_type
+        %td= link_to '詳細', item
+        %td= link_to 'download', download_item_path(item), 'data-no-turbolink' => true
+
+%br
+
